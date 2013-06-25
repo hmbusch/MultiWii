@@ -446,7 +446,7 @@
       //#define RCAUX2PINRXO
 
       /* aux2 pin on pin D17 (RXLED) */
-      //#define RCAUX2PIND17
+      #define RCAUX2PIND17
 
     /**********************************    Buzzer Pin    **********************************/
       /* this moves the Buzzer pin from TXO to D8 for use with ppm sum or spectrum sat. RX (not needed if A32U4ALLPINS is active) */
