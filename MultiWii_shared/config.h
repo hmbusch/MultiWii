@@ -55,7 +55,7 @@
     //#define MINTHROTTLE 1120 // for Super Simple ESCs 10A
     //#define MINTHROTTLE 1064 // special ESC (simonk)
     //#define MINTHROTTLE 1050 // for brushed ESCs like ladybird
-    #define MINTHROTTLE 1150 // (*)
+    #define MINTHROTTLE 1250 // (*)
 
   /****************************    Motor maxthrottle    *******************************/
     /* this is the maximum value for the ESCs at full power, this value can be increased up to 2000 */
@@ -520,7 +520,7 @@
          balancing options ran out. Uncomment only one option!
          IMPORTANT! Change low pass filter setting changes PID behaviour, so retune your PID's after changing LPF.*/
       //#define MPU6050_LPF_256HZ     // This is the default setting, no need to uncomment, just for reference
-      //#define MPU6050_LPF_188HZ
+      #define MPU6050_LPF_188HZ
       //#define MPU6050_LPF_98HZ
       //#define MPU6050_LPF_42HZ
       //#define MPU6050_LPF_20HZ
