@@ -30,8 +30,8 @@
     //#define GIMBAL
     //#define BI
     //#define TRI
-    //#define QUADP
-    #define QUADX
+    #define QUADP
+    //#define QUADX
     //#define Y4
     //#define Y6
     //#define HEX6
@@ -59,7 +59,7 @@
 
   /****************************    Motor maxthrottle    *******************************/
     /* this is the maximum value for the ESCs at full power, this value can be increased up to 2000 */
-    #define MAXTHROTTLE 1850
+    #define MAXTHROTTLE 1990
 
   /****************************    Mincommand          *******************************/
     /* this is the value for the ESCs when they are not armed
