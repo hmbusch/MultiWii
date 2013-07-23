@@ -35,7 +35,7 @@
     //#define Y4
     //#define Y6
     //#define HEX6
-    //#define HEX6X
+    #define HEX6X
     //#define HEX6H  // New Model
     //#define OCTOX8
     //#define OCTOFLATP
@@ -55,11 +55,11 @@
     //#define MINTHROTTLE 1120 // for Super Simple ESCs 10A
     //#define MINTHROTTLE 1064 // special ESC (simonk)
     //#define MINTHROTTLE 1050 // for brushed ESCs like ladybird
-    #define MINTHROTTLE 1150 // (*)
+    #define MINTHROTTLE 1250 // (*)
 
   /****************************    Motor maxthrottle    *******************************/
     /* this is the maximum value for the ESCs at full power, this value can be increased up to 2000 */
-    #define MAXTHROTTLE 1850
+    #define MAXTHROTTLE 1700
 
   /****************************    Mincommand          *******************************/
     /* this is the value for the ESCs when they are not armed
@@ -91,7 +91,7 @@
       //#define FREEIMUv035_BMP // FreeIMU v0.3.5_BMP
       //#define FREEIMUv04      // FreeIMU v0.4 with MPU6050, HMC5883L, MS561101BA                  <- confirmed by Alex
       //#define FREEIMUv043     // same as FREEIMUv04 with final MPU6050 (with the right ACC scale)
-      //#define NANOWII         // the smallest multiwii FC based on MPU6050 + pro micro based proc <- confirmed by Alex
+      #define NANOWII         // the smallest multiwii FC based on MPU6050 + pro micro based proc <- confirmed by Alex
       //#define PIPO            // 9DOF board from erazz
       //#define QUADRINO        // full FC board 9DOF+baro board from witespy  with BMP085 baro     <- confirmed by Alex
       //#define QUADRINO_ZOOM   // full FC board 9DOF+baro board from witespy  second edition
@@ -439,14 +439,14 @@
          Motor 1-4 = 10-bit hardware PWM
          Motor 5-8 = 10-bit Software PWM
          Servos    = 10-bit Software PWM */
-      //#define HWPWM6
+      #define HWPWM6
 
     /**********************************    Aux 2 Pin     **********************************/
       /* AUX2 pin on pin RXO */
       //#define RCAUX2PINRXO
 
       /* aux2 pin on pin D17 (RXLED) */
-      //#define RCAUX2PIND17
+      #define RCAUX2PIND17
 
     /**********************************    Buzzer Pin    **********************************/
       /* this moves the Buzzer pin from TXO to D8 for use with ppm sum or spectrum sat. RX (not needed if A32U4ALLPINS is active) */
@@ -520,7 +520,7 @@
          balancing options ran out. Uncomment only one option!
          IMPORTANT! Change low pass filter setting changes PID behaviour, so retune your PID's after changing LPF.*/
       //#define MPU6050_LPF_256HZ     // This is the default setting, no need to uncomment, just for reference
-      //#define MPU6050_LPF_188HZ
+      #define MPU6050_LPF_188HZ
       //#define MPU6050_LPF_98HZ
       //#define MPU6050_LPF_42HZ
       //#define MPU6050_LPF_20HZ
@@ -1022,7 +1022,7 @@
        Read How To at http://code.google.com/p/multiwii/wiki/ESCsCalibration */
     #define ESC_CALIB_LOW  MINCOMMAND
     #define ESC_CALIB_HIGH 2000
-    //#define ESC_CALIB_CANNOT_FLY  // uncomment to activate
+    #define ESC_CALIB_CANNOT_FLY  // uncomment to activate
 
   /****           internal frequencies                             ****/
     /* frequenies for rare cyclic actions in the main loop, depend on cycle time
