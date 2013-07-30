@@ -453,7 +453,9 @@ void initOutput() {
   /********  special version of MultiWii to calibrate all attached ESCs ************/
   #if defined(ESC_CALIB_CANNOT_FLY)
     writeAllMotors(ESC_CALIB_HIGH);
-    delay(3000);
+    // I had trouble calibrating the ESC due to a timing issue, fixed that by increasing the 
+    // delay time during which the full power signal is sent to the ESCs
+    delay(10000);
     writeAllMotors(ESC_CALIB_LOW);
     delay(500);
     while (1) {
