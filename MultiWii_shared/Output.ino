@@ -453,7 +453,7 @@ void initOutput() {
   /********  special version of MultiWii to calibrate all attached ESCs ************/
   #if defined(ESC_CALIB_CANNOT_FLY)
     writeAllMotors(ESC_CALIB_HIGH);
-    delay(3000);
+    delay(10000);
     writeAllMotors(ESC_CALIB_LOW);
     delay(500);
     while (1) {
