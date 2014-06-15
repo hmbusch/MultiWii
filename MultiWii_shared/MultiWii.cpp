@@ -1,7 +1,7 @@
 /*
 MultiWiiCopter by Alexandre Dubus
 www.multiwii.com
-March  2013     V2.2
+November  2013     V2.3
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
@@ -242,9 +242,6 @@ uint16_t intPowerTrigger1;
 // ******************
 // rc functions
 // ******************
-#define MINCHECK 1100
-#define MAXCHECK 1900
-
 #define ROL_LO  (1<<(2*ROLL))
 #define ROL_CE  (3<<(2*ROLL))
 #define ROL_HI  (2<<(2*ROLL))
@@ -274,7 +271,7 @@ int16_t lookupThrottleRC[11];// lookup table for expo & mid THROTTLE
 #endif
 
 #if defined(OPENLRSv2MULTI)
-  static uint8_t pot_P,pot_I; // OpenLRS onboard potentiometers for P and I trim or other usages
+  uint8_t pot_P,pot_I; // OpenLRS onboard potentiometers for P and I trim or other usages
 #endif
 
 
@@ -364,9 +361,9 @@ void annexCode() { // this code is excetuted at each loop and won't interfere wi
     if (rcData[axis]<MIDRC) rcCommand[axis] = -rcCommand[axis];
   }
   tmp = constrain(rcData[THROTTLE],MINCHECK,2000);
-  tmp = (uint32_t)(tmp-MINCHECK)*1000/(2000-MINCHECK); // [MINCHECK;2000] -> [0;1000]
-  tmp2 = tmp/100;
-  rcCommand[THROTTLE] = lookupThrottleRC[tmp2] + (tmp-tmp2*100) * (lookupThrottleRC[tmp2+1]-lookupThrottleRC[tmp2]) / 100; // [0;1000] -> expo -> [conf.minthrottle;MAXTHROTTLE]
+  tmp = (uint32_t)(tmp-MINCHECK)*2559/(2000-MINCHECK); // [MINCHECK;2000] -> [0;2559]
+  tmp2 = tmp/256; // range [0;9]
+  rcCommand[THROTTLE] = lookupThrottleRC[tmp2] + (tmp-tmp2*256) * (lookupThrottleRC[tmp2+1]-lookupThrottleRC[tmp2]) / 256; // [0;2559] -> expo -> [conf.minthrottle;MAXTHROTTLE]
 
   if(f.HEADFREE_MODE) { //to optimize
     float radDiff = (att.heading - headFreeModeHold) * 0.0174533f; // where PI/180 ~= 0.0174533
@@ -399,8 +396,7 @@ void annexCode() { // this code is excetuted at each loop and won't interfere wi
     #endif
     powerValue = ( conf.psensornull > p ? conf.psensornull - p : p - conf.psensornull); // do not use abs(), it would induce implicit cast to uint and overrun
     analog.amperage = powerValue * conf.pint2ma;
-    if ( powerValue > 307) powerValue = 307;  // only accept reasonable values. 307 is empirical
-    pMeter[PMOTOR_SUM] += ((currentTime-lastRead) * (uint32_t)(powerValue*conf.pint2ma))/100000; // [10 mA * msec]
+    pMeter[PMOTOR_SUM] += ((currentTime-lastRead) * (uint32_t)((uint32_t)powerValue*conf.pint2ma))/100000; // [10 mA * msec]
     lastRead = currentTime;
     break;
   }
@@ -821,13 +817,15 @@ void loop () {
     
     // perform actions    
     if (rcData[THROTTLE] <= MINCHECK) {            // THROTTLE at minimum
-      errorGyroI[ROLL] = 0; errorGyroI[PITCH] = 0;
-      #if PID_CONTROLLER == 1
-        errorGyroI_YAW = 0;
-      #elif PID_CONTROLLER == 2
-        errorGyroI[YAW] = 0;
+      #if !defined(FIXEDWING)
+        errorGyroI[ROLL] = 0; errorGyroI[PITCH] = 0;
+        #if PID_CONTROLLER == 1
+          errorGyroI_YAW = 0;
+        #elif PID_CONTROLLER == 2
+          errorGyroI[YAW] = 0;
+        #endif
+        errorAngleI[ROLL] = 0; errorAngleI[PITCH] = 0;
       #endif
-      errorAngleI[ROLL] = 0; errorAngleI[PITCH] = 0;
       if (conf.activate[BOXARM] > 0) {             // Arming/Disarming via ARM BOX
         if ( rcOptions[BOXARM] && f.OK_TO_ARM ) go_arm(); else if (f.ARMED) go_disarm();
       }
